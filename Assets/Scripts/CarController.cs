@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 namespace UnityStandardAssets.Vehicles.Car
 {
@@ -145,9 +146,38 @@ namespace UnityStandardAssets.Vehicles.Car
 
             //Set the steer on the front wheels.
             //Assuming that wheels 0 and 1 are the front wheels.
-            m_SteerAngle = steering*m_MaximumSteerAngle;
+            Vector3 move;
+            move = CrossPlatformInputManager.GetAxis("Vertical") * -Vector3.right + CrossPlatformInputManager.GetAxis("Horizontal") * Vector3.forward;
+
+            Quaternion bla = Quaternion.FromToRotation((transform.rotation * Vector3.forward), move);
+            //Debug.DrawLine(transform.position, transform.position + transform.rotation * Vector3.forward * 3, Color.yellow, 2);
+            //Debug.DrawLine(transform.position, transform.position + move * 3, Color.green, 2);
+
+            //Set the steer on the front wheels.
+            //Assuming that wheels 0 and 1 are the front wheels.
+            m_SteerAngle = bla.eulerAngles.y;
+            if (180 - Mathf.Abs(m_SteerAngle - 180) > m_MaximumSteerAngle)
+            {
+                if (m_SteerAngle > 135 && m_SteerAngle < 225)
+                {
+                    m_SteerAngle = m_SteerAngle * -1;
+                }
+                else
+                {
+                    if (m_SteerAngle >= 225)
+                    {
+                        m_SteerAngle = 360 - m_MaximumSteerAngle;
+                    }
+                    else
+                    {
+                        m_SteerAngle = m_MaximumSteerAngle;
+                    }
+                }
+
+            }
             m_WheelColliders[0].steerAngle = m_SteerAngle;
             m_WheelColliders[1].steerAngle = m_SteerAngle;
+
 
             SteerHelper();
             ApplyDrive(accel, footbrake);
