@@ -5,13 +5,15 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Car.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/testscene.unity
   - enabled: 0
     path: Assets/Prefabs/RoadKit/Scene/exampleScene.unity
   - enabled: 1
     path: Assets/Scenes/levelLoad1.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/mainMenu.unity
+  - enabled: 0
+    path: Assets/Scenes/buildtest.unity
